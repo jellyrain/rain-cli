@@ -1,0 +1,19 @@
+const postcssPresetEnv = require('postcss-preset-env')
+const atImport = require("postcss-import")
+
+module.exports = {
+<%if (style === 'scss') { %>
+    syntax: 'postcss-scss',
+<% } %>
+    plugins: [
+        atImport(),
+        postcssPresetEnv({
+            stage: 0,
+            autoprefixer: { grid: true },
+            browsers: [
+                '> 0.25%',
+                'not dead'
+            ]
+        })
+    ]
+}
