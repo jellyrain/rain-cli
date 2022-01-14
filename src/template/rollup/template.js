@@ -1,18 +1,19 @@
-import {resolve} from 'path'
+import { resolve } from 'path'
+import { fileURLToPath } from 'url'
 import fs from 'fs'
 import ejs from 'ejs'
 import prettier from 'prettier'
 
-const __dirname = resolve()
+const __dirname = fileURLToPath(import.meta.url)
 
 export default code => {
-    let packages = fs.readFileSync(resolve(__dirname, 'src/template/rollup/package.ejs'))
+    let packages = fs.readFileSync(resolve(__dirname, '../package.ejs'))
 
-    let rollup = fs.readFileSync(resolve(__dirname, 'src/template/rollup/rollup.config.ejs'))
+    let rollup = fs.readFileSync(resolve(__dirname, '../rollup.config.ejs'))
 
-    let babel = fs.readFileSync(resolve(__dirname, 'src/template/rollup/babel.config.ejs'))
+    let babel = fs.readFileSync(resolve(__dirname, '../babel.config.ejs'))
 
-    let postcss = fs.readFileSync(resolve(__dirname, 'src/template/rollup/postcss.config.ejs'))
+    let postcss = fs.readFileSync(resolve(__dirname, '../postcss.config.ejs'))
 
     let core = ejs.render(packages.toString(), code)
     packages = prettier.format(core,{ parser: 'json' })
