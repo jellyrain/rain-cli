@@ -3,6 +3,7 @@
 import chalk from 'chalk'
 import inquirer from 'inquirer'
 import rollup from './template/rollup/index.js'
+import webpack from  './template/webpack/index.js'
 
 console.log(chalk.green(`1. 请选择您的配置：`))
 const options = await inquirer.prompt([
@@ -16,10 +17,11 @@ const options = await inquirer.prompt([
 
 switch (options.build) {
     case 'webpack':
-        console.log(chalk.red('不好意思，还未实现，暂未开放！！！'))
+        webpack()
         break
     case 'rollup':
         rollup()
+        break
 }
 
 

@@ -1,0 +1,84 @@
+const { resolve } = require('path')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const TerserPlugin = require("terser-webpack-plugin")
+
+module.exports = {
+    entry: './src/main.js',
+    output: {
+        filename: 'build.min.js',
+        path: resolve(__dirname, 'dist')
+    },
+    module: {
+        rules: [
+        <%if (script === 'typescript') { %>
+            {
+                test: /\.tsx?$/,
+                exclude: /(node_modules|bower_components)/,
+                use: [
+                    'babel-loader',
+                    'ts-loader'
+                ]
+            },
+        <% } %>
+            {
+                test: /\.m?js$/,
+                exclude: /(node_modules|bower_components)/,
+                use: ['babel-loader']
+            },
+        <%if (style === 'scss') { %>
+            {
+                test: /\.s[ac]ss$/i,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'postcss-loader',
+                    'sass-loader'
+                ]
+            },
+        <% } %>
+            {
+                test: /\.css$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'postcss-loader'
+                ]
+            },
+            {
+                test: /\.html$/,
+                loader: 'html-loader'
+            },
+            {
+                test: /\.(jpg|png|gif)$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 8 * 1024,
+                    name: '[contenthash: 10].[ext]',
+                    esModule: false,
+                    outputPath: 'images'
+                }
+            }
+        ]
+    },
+    optimization: {
+        minimizer: [
+            new CssMinimizerPlugin(),
+            new TerserPlugin()
+        ]
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: '../public/index.html',
+            minify: {
+                collapseWhitespace: true,
+                removeComments: true,
+            }
+        }),
+        new MiniCssExtractPlugin({
+            filename: 'css/built.min.css'
+        })
+    ],
+    mode: 'production'
+}

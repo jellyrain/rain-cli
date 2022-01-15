@@ -1,0 +1,43 @@
+{
+    "name": "<%= name %> ",
+    "version": "1.0.0",
+    "description": "",
+    "main": "template.js",
+    "scripts": {
+    "build": "webpack"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@babel/core": "^7.16.7",
+        "@babel/plugin-transform-runtime": "^7.16.8",
+        "@babel/preset-env": "^7.16.8",
+        "babel-loader": "^8.2.3",
+        "css-loader": "^6.5.1",
+        "css-minimizer-webpack-plugin": "^3.3.1",
+        "file-loader": "^6.2.0",
+        "html-loader": "^3.0.1",
+        "html-webpack-plugin": "^5.5.0",
+        "mini-css-extract-plugin": "^2.4.5",
+        "postcss": "^8.4.5",
+        "postcss-loader": "^6.2.1",
+        "postcss-preset-env": "^7.1.0",
+        "terser-webpack-plugin": "^5.3.0",
+        "url-loader": "^4.1.1",
+        "webpack": "^5.65.0",
+        "webpack-cli": "^4.9.1",
+    <%if (script === 'typescript') { %>
+        "ts-loader": "^9.2.6",
+        "typescript": "^4.5.4",
+    <% } %>
+    <%if (style === 'scss') { %>
+        "sass": "^1.45.2",
+        "postcss-scss": "^4.0.2",
+    <% } %>
+    },
+    "dependencies": {
+        "@babel/runtime": "^7.16.7",
+        "core-js": "^3.20.2"
+    }
+}
